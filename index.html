@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SEOPulse Pro - Trợ Lý Viết Bài Chuẩn SEO Google & Google Ads</title>
+  <meta name="description" content="Công cụ soạn thảo bài viết chuẩn SEO Google theo tiêu chí Helpful Content, EEAT và tối ưu điểm chất lượng Google Ads giúp tăng index và chuyển đổi cao.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./src/styles/main.css">
+  <link rel="stylesheet" href="./src/styles/sidebar.css">
+  <link rel="stylesheet" href="./src/styles/editor.css">
+  <link rel="stylesheet" href="./src/styles/analytics.css">
+</head>
+<body class="theme-light">
+  <!-- App Container -->
+  <div class="app-shell" id="app">
+    
+    <!-- Top Navbar -->
+    <header class="top-nav">
+      <div class="brand-section">
+        <div class="brand-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <div class="brand-title">
+            <span class="brand-seo">SEO</span><span class="brand-pulse">Pulse</span>
+            <span class="brand-badge">Pro 2026</span>
+          </div>
+          <span class="brand-tagline">Google EEAT & Ads Optimizer</span>
+        </div>
+      </div>
+
+      <div class="nav-center">
+        <div class="doc-title-wrapper">
+          <input type="text" id="docTitleInput" class="doc-title-input" placeholder="Tiêu đề tài liệu / Dự án..." value="Bài viết mẫu chuẩn SEO Google & Google Ads">
+          <span class="save-status" id="saveStatus">
+            <svg class="status-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <span id="saveStatusText">Đã lưu tự động</span>
+          </span>
+        </div>
+      </div>
+
+      <div class="nav-actions">
+        <!-- Target Mode Toggle -->
+        <div class="mode-selector">
+          <button type="button" class="mode-btn active" data-mode="all" title="Tối ưu kết hợp cả SEO Google và Google Ads">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polygon points="12 6 12 12 16 14"></polygon></svg>
+            <span>Đa Năng (SEO + Ads)</span>
+          </button>
+          <button type="button" class="mode-btn" data-mode="seo" title="Tập trung tối ưu SEO tự nhiên & tăng index">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+            <span>Chuẩn SEO</span>
+          </button>
+          <button type="button" class="mode-btn" data-mode="ads" title="Tập trung tối ưu Landing Page & chuyển đổi Ads">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+            <span>Google Ads</span>
+          </button>
+        </div>
+
+        <!-- Quick Templates & Actions -->
+        <div class="action-buttons">
+          <button type="button" class="btn btn-spintx" id="btnOpenSpintX" title="Xem và nạp 47 bài viết từ Kiến Thức Vận Hành - spintx.vn">
+            <span class="spintx-icon">📚</span>
+            <span>Kho Bài SpintX</span>
+            <span class="spintx-count-badge" id="spintxBadgeCount">47</span>
+          </button>
+
+          <!-- Nút Cập Nhật Lên Trang SpintX (Hiển thị nổi bật) -->
+          <button type="button" class="btn btn-push-spintx" id="btnOpenPushModal" title="Cập nhật nội dung bài viết này lên website spintx.vn / GitHub repository">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+            <span>Cập Nhật Lên Trang</span>
+          </button>
+
+          <button type="button" class="btn btn-secondary" id="btnTemplates" title="Chọn mẫu bài viết hoặc dàn ý tạo sẵn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+            <span>Mẫu Bài Viết</span>
+          </button>
+
+          <button type="button" class="btn btn-icon-only" id="btnGitHubSettings" title="Cài đặt đồng bộ Git cục bộ (Không cần API Key)">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+          </button>
+
+          <div class="dropdown" id="exportDropdown">
+            <button type="button" class="btn btn-primary" id="btnExportMenu">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+              <span>Xuất Bản</span>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+            <div class="dropdown-menu" id="exportMenu">
+              <button type="button" class="dropdown-item" id="btnCopyHtml">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                <div>
+                  <strong>Copy Clean HTML</strong>
+                  <small>Dán trực tiếp vào WordPress, Webflow, Ladipage</small>
+                </div>
+              </button>
+              <button type="button" class="dropdown-item" id="btnCopyMarkdown">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                <div>
+                  <strong>Copy Markdown</strong>
+                  <small>Dành cho Notion, Github, Dev Blog</small>
+                </div>
+              </button>
+              <button type="button" class="dropdown-item" id="btnExportHtmlFile">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 15V3m0 12l-4-4m4 4l4-4M2 17l.621 2.485A2 2 0 0 0 4.561 21h14.878a2 2 0 0 0 1.94-1.515L22 17"></path></svg>
+                <div>
+                  <strong>Tải file .HTML trọn gói</strong>
+                  <small>Bao gồm đầy đủ Meta Tags & Schema JSON-LD</small>
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Workspace 3 Columns -->
+    <main class="main-workspace">
+      
+      <!-- ================= LEFT COLUMN: SEO & ADS CONFIG ================= -->
+      <aside class="sidebar-left" id="sidebarLeft">
+        <div class="sidebar-header">
+          <div class="sidebar-tabs">
+            <button type="button" class="sidebar-tab active" data-tab="config">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+              <span>Cấu Hình SEO & Ads</span>
+            </button>
+            <button type="button" class="sidebar-tab" data-tab="history">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+              <span>Bài Viết (<span id="savedDocsCount">1</span>)</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="sidebar-content">
+          <!-- TAB 1: Cấu hình SEO & Ads -->
+          <div class="sidebar-panel active" id="tabConfig">
+            
+            <!-- Từ khóa chính -->
+            <div class="form-group">
+              <div class="label-with-tip">
+                <label for="focusKeywordInput">Từ Khóa Chính (Focus Keyword) <span class="req">*</span></label>
+                <span class="info-badge" title="Từ khóa quan trọng nhất mà bài viết cần lên top hoặc chạy từ khóa Google Ads">Cốt lõi</span>
+              </div>
+              <div class="input-with-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <input type="text" id="focusKeywordInput" placeholder="Ví dụ: dịch vụ seo tổng thể, học google ads..." value="dịch vụ seo tổng thể">
+              </div>
+              <div class="field-hint" id="keywordStatsHint">Đang quét vị trí xuất hiện...</div>
+            </div>
+
+            <!-- Từ khóa phụ & LSI -->
+            <div class="form-group">
+              <div class="label-with-tip">
+                <label>Từ Khóa Phụ / LSI Semantic</label>
+                <span class="info-badge" title="Các từ khóa ngữ nghĩa liên quan giúp Google hiểu sâu chủ đề">LSI</span>
+              </div>
+              <div class="tags-input-wrapper" id="lsiTagsWrapper">
+                <div class="tags-list" id="lsiTagsList"></div>
+                <input type="text" id="lsiInput" placeholder="Nhập từ khóa phụ rồi nhấn Enter...">
+              </div>
+              <div class="tags-quick-add" id="lsiQuickSuggestions">
+                <span class="quick-title">Gợi ý nhanh:</span>
+                <button type="button" class="btn-tag-suggest" data-tag="báo giá seo">báo giá seo +</button>
+                <button type="button" class="btn-tag-suggest" data-tag="tối ưu onpage">tối ưu onpage +</button>
+                <button type="button" class="btn-tag-suggest" data-tag="tăng traffic">tăng traffic +</button>
+                <button type="button" class="btn-tag-suggest" data-tag="chi phí chạy ads">chi phí chạy ads +</button>
+              </div>
+            </div>
+
+            <!-- Search Intent -->
+            <div class="form-group">
+              <label for="searchIntentSelect">Ý Định Tìm Kiếm (Search Intent)</label>
+              <select id="searchIntentSelect" class="form-select">
+                <option value="commercial" selected>Commercial (Tìm hiểu & So sánh dịch vụ/sản phẩm)</option>
+                <option value="transactional">Transactional (Mua ngay / Đăng ký chạy Ads)</option>
+                <option value="informational">Informational (Chia sẻ kiến thức / Hướng dẫn A-Z)</option>
+                <option value="navigational">Navigational (Điều hướng thương hiệu)</option>
+              </select>
+            </div>
+
+            <!-- Tiêu đề SEO (Title Tag) -->
+            <div class="form-group">
+              <div class="label-with-counter">
+                <label for="seoTitleInput">Tiêu Đề SEO (Title Tag)</label>
+                <span class="char-counter" id="titleCounter">0/60 ký tự</span>
+              </div>
+              <textarea id="seoTitleInput" rows="2" class="form-textarea" placeholder="Tiêu đề hiển thị trên Google SERP (Nên từ 50-60 ký tự, chứa từ khóa chính ở đầu)...">Dịch Vụ SEO Tổng Thể Uy Tín 2026: Tăng Traffic & Tối Ưu Ads Vượt Trội</textarea>
+              <div class="progress-bar-wrap">
+                <div class="progress-bar" id="titleProgressBar"></div>
+              </div>
+            </div>
+
+            <!-- Meta Description -->
+            <div class="form-group">
+              <div class="label-with-counter">
+                <label for="metaDescInput">Mô Tả Meta (Meta Description)</label>
+                <span class="char-counter" id="descCounter">0/160 ký tự</span>
+              </div>
+              <textarea id="metaDescInput" rows="3" class="form-textarea" placeholder="Đoạn trích tóm tắt thu hút click (Nên từ 140-160 ký tự, có lời kêu gọi hành động)...">Tìm kiếm dịch vụ SEO tổng thể uy tín chuẩn Google EEAT? Đột phá thứ hạng từ khóa, tăng x3 khách hàng và tối ưu ngân sách Ads hiệu quả. Nhận báo giá ngay!</textarea>
+              <div class="progress-bar-wrap">
+                <div class="progress-bar" id="descProgressBar"></div>
+              </div>
+            </div>
+
+            <!-- Đường dẫn tĩnh (Slug) -->
+            <div class="form-group">
+              <div class="label-with-tip">
+                <label for="slugInput">Đường Dẫn URL (Slug)</label>
+                <button type="button" class="btn-text-action" id="btnAutoSlug">Tự tạo từ Title</button>
+              </div>
+              <div class="input-slug-prefix">
+                <span class="slug-prefix">https://yoursite.com/</span>
+                <input type="text" id="slugInput" value="dich-vu-seo-tong-the-uy-tin">
+              </div>
+            </div>
+
+            <!-- Thông tin tác giả (EEAT) -->
+            <div class="form-group">
+              <div class="label-with-tip">
+                <label for="authorInput">Tác Giả & Chuyên Môn (E-E-A-T)</label>
+                <span class="info-badge green" title="Google cực kỳ coi trọng tác giả có chuyên môn và uy tín">EEAT</span>
+              </div>
+              <input type="text" id="authorInput" class="form-input" placeholder="Tên chuyên gia / Chức danh..." value="Nguyễn Hoàng Nam - Chuyên Gia SEO & Google Ads 8 Năm Kinh Nghiệm">
+            </div>
+
+            <!-- Nút kêu gọi hành động cho Ads (CTA) -->
+            <div class="form-group highlight-box">
+              <div class="label-with-tip">
+                <label for="ctaTextInput">Thông Điệp Kêu Gọi Ads (CTA)</label>
+                <span class="info-badge amber" title="Dành cho bài viết chạy Google Ads tìm kiếm và chuyển đổi">Ads CTA</span>
+              </div>
+              <input type="text" id="ctaTextInput" class="form-input" placeholder="Ví dụ: Đăng Ký Nhận Tư Vấn Miễn Phí, Hotline: 0988..." value="Nhận Báo Giá & Phân Tích Website Miễn Phí (Hotline: 0988.123.456)">
+            </div>
+
+          </div>
+
+          <!-- TAB 2: Quản lý bài viết đã lưu -->
+          <div class="sidebar-panel" id="tabHistory">
+            <div class="history-actions">
+              <button type="button" class="btn btn-primary btn-block" id="btnNewDoc">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                <span>Tạo Bài Viết Mới</span>
+              </button>
+              <button type="button" class="btn btn-secondary btn-block" id="btnLoadDemo">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                <span>Tải Bài Mẫu Chuẩn Google (95 Điểm)</span>
+              </button>
+            </div>
+            <div class="saved-list" id="savedDocsList">
+              <!-- Rendered via JS -->
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- ================= MIDDLE COLUMN: RICH EDITOR ================= -->
+      <section class="editor-center" id="editorCenter">
+        
+        <!-- Smart Toolbar -->
+        <div class="editor-toolbar">
+          <!-- Text Styling Group -->
+          <div class="toolbar-group">
+            <select id="formatBlockSelect" class="toolbar-select" title="Định dạng tiêu đề">
+              <option value="p">Đoạn văn (Paragraph)</option>
+              <option value="h1">Thẻ H1 (Tiêu đề chính)</option>
+              <option value="h2">Thẻ H2 (Mục lớn)</option>
+              <option value="h3">Thẻ H3 (Mục con)</option>
+              <option value="h4">Thẻ H4 (Tiểu mục)</option>
+            </select>
+          </div>
+
+          <div class="toolbar-separator"></div>
+
+          <div class="toolbar-group">
+            <button type="button" class="tool-btn" data-cmd="bold" title="In đậm (Ctrl+B)">
+              <strong>B</strong>
+            </button>
+            <button type="button" class="tool-btn" data-cmd="italic" title="In nghiêng (Ctrl+I)">
+              <em>I</em>
+            </button>
+            <button type="button" class="tool-btn" data-cmd="underline" title="Gạch chân (Ctrl+U)">
+              <u>U</u>
+            </button>
+            <button type="button" class="tool-btn" data-cmd="strikeThrough" title="Gạch ngang">
+              <s>S</s>
+            </button>
+          </div>
+
+          <div class="toolbar-separator"></div>
+
+          <!-- Lists & Alignment Group -->
+          <div class="toolbar-group">
+            <button type="button" class="tool-btn" data-cmd="insertUnorderedList" title="Danh sách gạch đầu dòng">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            </button>
+            <button type="button" class="tool-btn" data-cmd="insertOrderedList" title="Danh sách số thứ tự">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="10" y1="6" x2="21" y2="6"></line><line x1="10" y1="12" x2="21" y2="12"></line><line x1="10" y1="18" x2="21" y2="18"></line><path d="M4 6h1v4"></path><path d="M4 10h2"></path><path d="M6 18H4c0-1 2-2 2-3s-1-1.5-2-1"></path></svg>
+            </button>
+            <button type="button" class="tool-btn" id="btnInsertTable" title="Chèn bảng so sánh">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="3" y1="15" x2="21" y2="15"></line><line x1="12" y1="3" x2="12" y2="21"></line></svg>
+            </button>
+            <button type="button" class="tool-btn" id="btnInsertLink" title="Chèn liên kết (Internal/External Link)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+            </button>
+            <button type="button" class="tool-btn" id="btnInsertImage" title="Chèn ảnh chuẩn SEO (Kèm thẻ ALT & Chú thích)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+            </button>
+          </div>
+
+          <div class="toolbar-separator"></div>
+
+          <!-- SMART BLOCKS (Google EEAT & Ads conversion) -->
+          <div class="toolbar-group smart-blocks-group">
+            <span class="smart-label">Smart Blocks:</span>
+            
+            <button type="button" class="btn-block-insert" id="btnBlockDirectAnswer" title="Chèn hộp câu trả lời trực tiếp nhắm vị trí Top 0 Featured Snippet">
+              <span class="block-icon">💡</span>
+              <span>Top 0 Snippet</span>
+            </button>
+
+            <button type="button" class="btn-block-insert" id="btnBlockEEAT" title="Chèn hộp chia sẻ kinh nghiệm & Case study chuẩn EEAT">
+              <span class="block-icon">🛡️</span>
+              <span>EEAT Case Study</span>
+            </button>
+
+            <button type="button" class="btn-block-insert" id="btnBlockExpert" title="Chèn hộp ý kiến chuyên gia có kiểm chứng">
+              <span class="block-icon">👨‍⚕️</span>
+              <span>Ý Kiến Chuyên Gia</span>
+            </button>
+
+            <button type="button" class="btn-block-insert" id="btnBlockCTA" title="Chèn khung Kêu Gọi Hành Động (CTA) tăng chuyển đổi Ads">
+              <span class="block-icon">⚡</span>
+              <span>Khung CTA Ads</span>
+            </button>
+
+            <button type="button" class="btn-block-insert" id="btnBlockFAQ" title="Chèn bộ câu hỏi thường gặp FAQ (Tự sinh FAQ Schema)">
+              <span class="block-icon">❓</span>
+              <span>Khối FAQ</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Main Editable Canvas -->
+        <div class="editor-canvas-wrap">
+          <div class="editor-canvas" id="editorContent" contenteditable="true" spellcheck="false" data-placeholder="Bắt đầu soạn thảo bài viết của bạn tại đây... Sử dụng các tiêu đề H1, H2, H3 và chèn các Smart Blocks để đạt điểm Google tuyệt đối!">
+            <!-- Default Content Loaded via JS -->
+          </div>
+        </div>
+
+        <!-- Bottom Status Bar -->
+        <footer class="editor-status-bar">
+          <div class="status-metric">
+            <span class="metric-label">Số từ:</span>
+            <strong class="metric-val" id="wordCount">0</strong>
+            <span class="target-tag" id="wordTargetTag">Chuẩn: 1200 - 2500 từ</span>
+          </div>
+          <div class="status-metric">
+            <span class="metric-label">Ký tự:</span>
+            <strong class="metric-val" id="charCount">0</strong>
+          </div>
+          <div class="status-metric">
+            <span class="metric-label">Thời gian đọc:</span>
+            <strong class="metric-val" id="readingTime">0 phút</strong>
+          </div>
+          <div class="status-metric">
+            <span class="metric-label">Cấu trúc:</span>
+            <span class="metric-pill" id="headingsCount">H1: 1 | H2: 4 | H3: 6</span>
+          </div>
+          <div class="status-metric">
+            <span class="metric-label">Hình ảnh:</span>
+            <span class="metric-pill" id="imagesCount">0 ảnh (0 có ALT)</span>
+          </div>
+          <div class="status-metric">
+            <span class="metric-label">Mật độ từ khóa:</span>
+            <strong class="metric-val highlight" id="keywordDensity">0.0%</strong>
+          </div>
+        </footer>
+
+      </section>
+
+      <!-- ================= RIGHT COLUMN: LIVE AUDIT & PREVIEWS ================= -->
+      <aside class="sidebar-right" id="sidebarRight">
+        
+        <!-- Header Scores Card -->
+        <div class="scores-card">
+          <div class="score-main">
+            <div class="radial-gauge" id="radialGauge">
+              <svg class="gauge-svg" width="96" height="96" viewBox="0 0 100 100">
+                <circle class="gauge-bg" cx="50" cy="50" r="42"></circle>
+                <circle class="gauge-progress" id="gaugeProgress" cx="50" cy="50" r="42"></circle>
+              </svg>
+              <div class="gauge-content">
+                <span class="gauge-number" id="gaugeScore">0</span>
+                <span class="gauge-total">/100</span>
+              </div>
+            </div>
+            <div class="score-meta">
+              <div class="score-badge" id="scoreRatingBadge">Cần Cải Thiện</div>
+              <h3 class="score-title" id="scoreVerdict">Đang phân tích bài viết...</h3>
+              <p class="score-desc" id="scoreAdvice">Hoàn thiện các tiêu chuẩn bên dưới để đạt chuẩn Index & Ads.</p>
+            </div>
+          </div>
+
+          <div class="sub-scores-grid">
+            <div class="sub-score-item">
+              <div class="sub-score-label">
+                <span>Google EEAT & SEO</span>
+                <strong id="seoScoreVal">0/100</strong>
+              </div>
+              <div class="mini-progress-track">
+                <div class="mini-progress-fill" id="seoProgressFill"></div>
+              </div>
+            </div>
+            <div class="sub-score-item">
+              <div class="sub-score-label">
+                <span>Google Ads Quality</span>
+                <strong id="adsScoreVal">0/100</strong>
+              </div>
+              <div class="mini-progress-track">
+                <div class="mini-progress-fill" id="adsProgressFill"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Analytics Navigation Tabs -->
+        <div class="analytics-tabs">
+          <button type="button" class="analytics-tab active" data-atab="seo-checklist">
+            <span>Tiêu Chí SEO</span>
+            <span class="badge-count" id="seoIssuesCount">0</span>
+          </button>
+          <button type="button" class="analytics-tab" data-atab="ads-check">
+            <span>Tối Ưu Ads</span>
+            <span class="badge-count" id="adsIssuesCount">0</span>
+          </button>
+          <button type="button" class="analytics-tab" data-atab="serp-preview">
+            <span>Xem Trước Google</span>
+          </button>
+          <button type="button" class="analytics-tab" data-atab="schema-view">
+            <span>Schema & Index</span>
+          </button>
+        </div>
+
+        <!-- Tab Contents -->
+        <div class="analytics-panels">
+          
+          <!-- PANEL 1: SEO & EEAT CHECKLIST -->
+          <div class="analytics-panel active" id="panelSeoChecklist">
+            <div class="checklist-section">
+              <div class="section-title">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
+                <span>Phân Bổ Từ Khóa & Thẻ Meta</span>
+              </div>
+              <ul class="checklist-items" id="seoMetaChecklist">
+                <!-- Dynamic via JS -->
+              </ul>
+            </div>
+
+            <div class="checklist-section">
+              <div class="section-title">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                <span>Cấu Trúc Bài Viết & Độ Dễ Đọc</span>
+              </div>
+              <ul class="checklist-items" id="seoContentChecklist">
+                <!-- Dynamic via JS -->
+              </ul>
+            </div>
+
+            <div class="checklist-section">
+              <div class="section-title">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                <span>Chuẩn Google EEAT & Helpful Content</span>
+              </div>
+              <ul class="checklist-items" id="seoEeatChecklist">
+                <!-- Dynamic via JS -->
+              </ul>
+            </div>
+
+            <div class="checklist-section">
+              <div class="section-title">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                <span>Từ Khóa LSI & Ngữ Nghĩa Xuất Hiện</span>
+              </div>
+              <div class="lsi-tracker-grid" id="lsiTrackerGrid">
+                <!-- Dynamic via JS -->
+              </div>
+            </div>
+          </div>
+
+          <!-- PANEL 2: GOOGLE ADS OPTIMIZATION -->
+          <div class="analytics-panel" id="panelAdsCheck">
+            <div class="ads-tips-banner">
+              <div class="banner-icon">🎯</div>
+              <div class="banner-text">
+                <strong>Điểm Chất Lượng (Quality Score)</strong>
+                <p>Google Ads đánh giá cao trang đích có từ khóa ở nửa đầu trang, tốc độ tương tác cao và CTA rõ ràng giúp hạ chi phí mỗi lượt click (CPC).</p>
+              </div>
+            </div>
+
+            <div class="checklist-section">
+              <div class="section-title">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                <span>Trải Nghiệm Trang Đích (Landing Page)</span>
+              </div>
+              <ul class="checklist-items" id="adsLandingChecklist">
+                <!-- Dynamic via JS -->
+              </ul>
+            </div>
+
+            <!-- Google Ads Ad Preview Simulator -->
+            <div class="ad-simulator-card">
+              <div class="ad-sim-header">
+                <span class="ad-sponsor-tag">Được tài trợ</span>
+                <span class="ad-options">···</span>
+              </div>
+              <div class="ad-sim-domain" id="adSimDomain">yoursite.com › dich-vu-seo</div>
+              <div class="ad-sim-headline" id="adSimHeadline">Dịch Vụ SEO Tổng Thể Uy Tín 2026 | Tăng 300% Khách Hàng</div>
+              <div class="ad-sim-desc" id="adSimDesc">Giải pháp SEO chuẩn Google EEAT đột phá doanh thu. Cam kết thứ hạng bền vững, tối ưu chi phí quảng cáo. Tư vấn miễn phí 24/7!</div>
+              <div class="ad-sim-sitelinks">
+                <span class="sim-sitelink">Bảng Giá Dịch Vụ</span>
+                <span class="sim-sitelink">Dự Án Đã Làm</span>
+                <span class="sim-sitelink">Tư Vấn Miễn Phí</span>
+                <span class="sim-sitelink">Liên Hệ Ngay</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- PANEL 3: SERP & SOCIAL PREVIEW -->
+          <div class="analytics-panel" id="panelSerpPreview">
+            <!-- View Mode Switcher -->
+            <div class="serp-device-switch">
+              <button type="button" class="device-btn active" data-device="mobile">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+                <span>Mobile SERP</span>
+              </button>
+              <button type="button" class="device-btn" data-device="desktop">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                <span>Desktop SERP</span>
+              </button>
+            </div>
+
+            <!-- Google Search Snippet Preview -->
+            <div class="serp-preview-box mobile" id="serpPreviewBox">
+              <div class="serp-site-info">
+                <div class="serp-favicon">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="#2563EB"><circle cx="12" cy="12" r="10"></circle></svg>
+                </div>
+                <div class="serp-domain-group">
+                  <div class="serp-site-name">Your Brand Official</div>
+                  <div class="serp-url" id="serpUrlPreview">https://yoursite.com › dich-vu-seo-tong-the</div>
+                </div>
+              </div>
+              <h4 class="serp-title" id="serpTitlePreview">Tiêu đề bài viết hiển thị trên Google</h4>
+              <p class="serp-snippet" id="serpDescPreview">Đoạn mô tả bài viết hiển thị trên trang kết quả tìm kiếm Google với đầy đủ thông tin thu hút người xem...</p>
+              
+              <!-- Snippet Rich FAQ Preview if present -->
+              <div class="serp-faq-preview" id="serpFaqPreview">
+                <div class="serp-faq-item">
+                  <span class="faq-q">Chi phí dịch vụ SEO tổng thể là bao nhiêu?</span>
+                  <span class="faq-arrow">▼</span>
+                </div>
+                <div class="serp-faq-item">
+                  <span class="faq-q">Sau bao lâu bài viết được Google lập chỉ mục (index)?</span>
+                  <span class="faq-arrow">▼</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Social Card Share Preview -->
+            <div class="social-preview-title">Xem Trước Khi Chia Sẻ (Zalo / Facebook)</div>
+            <div class="social-card-preview">
+              <div class="social-card-img-placeholder" id="socialCardImg">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                <span>Ảnh Thumbnail Bài Viết</span>
+              </div>
+              <div class="social-card-body">
+                <span class="social-domain">YOURSITE.COM</span>
+                <h5 class="social-card-title" id="socialTitle">Tiêu đề chia sẻ mạng xã hội</h5>
+                <p class="social-card-desc" id="socialDesc">Mô tả bài viết khi hiển thị trên newsfeed Zalo, Facebook...</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- PANEL 4: SCHEMA GENERATOR & FAST INDEXING -->
+          <div class="analytics-panel" id="panelSchemaView">
+            <div class="schema-header">
+              <div class="schema-info">
+                <strong>Tự Động Tạo Mã Schema JSON-LD</strong>
+                <p>Google Bot đọc mã này để hiểu cấu trúc bài viết và kích hoạt Rich Snippets (Sao đánh giá, FAQ Accordion trên Google).</p>
+              </div>
+              <button type="button" class="btn btn-sm btn-primary" id="btnCopySchema">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                <span>Copy Mã Schema</span>
+              </button>
+            </div>
+
+            <div class="code-viewer-wrap">
+              <pre class="code-viewer"><code class="language-json" id="schemaCodeOutput">// Đang tạo mã Schema JSON-LD...</code></pre>
+            </div>
+
+            <div class="indexing-guide-box">
+              <h4>🚀 Mẹo Tăng Tốc Index Sau Khi Đăng:</h4>
+              <ol class="guide-steps">
+                <li>Dán mã Schema JSON-LD phía trên vào thẻ <code>&lt;head&gt;</code> của trang web.</li>
+                <li>Mở <strong>Google Search Console</strong> &gt; Nhập URL vào thanh kiểm tra trên cùng &gt; Nhấn <strong>"Yêu cầu lập chỉ mục" (Request Indexing)</strong>.</li>
+                <li>Chia sẻ link lên các mạng xã hội (Facebook, Twitter/X, Zalo, LinkedIn) để bot phát hiện liên kết nhanh chóng.</li>
+                <li>Đặt liên kết nội bộ (Internal Link) từ trang chủ hoặc bài viết có lượng truy cập cao nhất về bài này.</li>
+              </ol>
+            </div>
+          </div>
+
+        </div>
+      </aside>
+
+    </main>
+
+    <!-- Modal: Mẫu bài viết có sẵn (Templates Modal) -->
+    <div class="modal-overlay" id="templatesModal">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-header">
+          <div class="modal-title-wrap">
+            <div class="modal-icon">📑</div>
+            <div>
+              <h3 class="modal-title">Thư Viện Dàn Ý Chuẩn Search Intent & Google Ads</h3>
+              <p class="modal-sub">Chọn mẫu bài viết cấu trúc sẵn để bắt đầu nhanh chóng</p>
+            </div>
+          </div>
+          <button type="button" class="modal-close" id="btnCloseTemplates">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="templates-grid" id="templatesGrid">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal: Chèn Ảnh Chuẩn SEO (Image Modal) -->
+    <div class="modal-overlay" id="imageModal">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <div class="modal-title-wrap">
+            <div class="modal-icon">🖼️</div>
+            <div>
+              <h3 class="modal-title">Chèn Hình Ảnh Chuẩn SEO Google</h3>
+              <p class="modal-sub">Thẻ ALT giúp Google Hình Ảnh hiểu nội dung và tăng index</p>
+            </div>
+          </div>
+          <button type="button" class="modal-close" id="btnCloseImageModal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="imgUrlInput">Đường dẫn hình ảnh (URL) <span class="req">*</span></label>
+            <input type="text" id="imgUrlInput" class="form-input" placeholder="https://example.com/hinh-anh.jpg" value="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&auto=format&fit=crop&q=80">
+          </div>
+          <div class="form-group">
+            <div class="label-with-tip">
+              <label for="imgAltInput">Văn bản thay thế (Thẻ ALT) <span class="req">*</span></label>
+              <span class="info-badge green">Bắt buộc SEO</span>
+            </div>
+            <input type="text" id="imgAltInput" class="form-input" placeholder="Mô tả bức ảnh có chứa từ khóa chính...">
+            <div class="field-hint">Mẹo: Đặt ALT ngắn gọn, tự nhiên, chứa từ khóa chính bài viết.</div>
+          </div>
+          <div class="form-group">
+            <label for="imgCaptionInput">Chú thích hình ảnh (Caption hiển thị dưới ảnh)</label>
+            <input type="text" id="imgCaptionInput" class="form-input" placeholder="Ví dụ: Biểu đồ tăng trưởng traffic sau khi tối ưu SEO">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" id="btnCancelImage">Hủy</button>
+            <button type="button" class="btn btn-primary" id="btnConfirmInsertImage">Chèn Vào Bài Viết</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal: Kho Bài Viết SpintX (SpintX Articles Modal) -->
+    <div class="modal-overlay" id="spintxModal">
+      <div class="modal-dialog modal-xl">
+        <div class="modal-header">
+          <div class="modal-title-wrap">
+            <div class="modal-icon">📚</div>
+            <div>
+              <h3 class="modal-title">Kho Bài Viết Kiến Thức Vận Hành - SPINTX.VN</h3>
+              <p class="modal-sub">Dữ liệu thực tế từ <a href="https://spintx.vn/kien-thuc-van-hanh" target="_blank" rel="noopener">spintx.vn/kien-thuc-van-hanh</a> &amp; repository <code>spintx-vn/website_spintx_vn</code></p>
+            </div>
+          </div>
+          <button type="button" class="modal-close" id="btnCloseSpintXModal">&times;</button>
+        </div>
+        <div class="modal-body spintx-modal-body">
+          <!-- Search & Filter Controls -->
+          <div class="spintx-toolbar">
+            <div class="spintx-search-box">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              <input type="text" id="spintxSearchInput" placeholder="Tìm kiếm theo tiêu đề, slug, nội dung bài viết (47 bài)...">
+              <button type="button" class="btn-clear-search" id="btnClearSpintxSearch">&times;</button>
+            </div>
+            <div class="spintx-stats">
+              Hiển thị <strong id="spintxVisibleCount">47</strong>/47 bài viết
+            </div>
+          </div>
+
+          <!-- Category Filter Pills -->
+          <div class="spintx-categories" id="spintxCategoriesList">
+            <button type="button" class="cat-pill active" data-cat="ALL">Tất cả bài viết (47)</button>
+            <!-- Generated dynamically via JS -->
+          </div>
+
+          <!-- Articles Grid -->
+          <div class="spintx-articles-grid" id="spintxArticlesGrid">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal: Cập Nhật Lên Trang / GitHub (Push Modal) -->
+    <div class="modal-overlay" id="pushModal">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <div class="modal-title-wrap">
+            <div class="modal-icon">🚀</div>
+            <div>
+              <h3 class="modal-title">Cập Nhật Bài Viết Lên Trang SPINTX</h3>
+              <p class="modal-sub" id="pushModalSub">Đồng bộ nội dung đã tối ưu vào hệ thống dữ liệu</p>
+            </div>
+          </div>
+          <button type="button" class="modal-close" id="btnClosePushModal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="push-summary-card">
+            <div class="push-item">
+              <span class="push-label">Bài viết:</span>
+              <strong id="pushArticleTitle">...</strong>
+            </div>
+            <div class="push-item">
+              <span class="push-label">Đường dẫn:</span>
+              <code id="pushArticleSlug">...</code>
+            </div>
+            <div class="push-item">
+              <span class="push-label">Mục tiêu:</span>
+              <span class="badge-status-online">Cơ Sở Dữ Liệu SpintX &amp; GitHub Sync</span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="commitMessageInput">Ghi chú cập nhật (Commit Message) <span class="req">*</span></label>
+            <input type="text" id="commitMessageInput" class="form-input" value="Tối ưu SEO &amp; Google Ads nội dung bài viết">
+          </div>
+
+          <div class="sync-options-group">
+            <label class="sync-option-card active">
+              <input type="radio" name="syncTarget" value="local-db" checked>
+              <div class="sync-opt-info">
+                <strong>1. Cập Nhật Vào Cơ Sở Dữ Liệu SpintX (Nhanh &amp; Tức thì)</strong>
+                <small>Cập nhật ngay vào kho dữ liệu 47 bài viết, tự động tính toán lại Mục Lục TOC và chấm điểm SEO (Không cần mạng hay token).</small>
+              </div>
+            </label>
+
+            <label class="sync-option-card">
+              <input type="radio" name="syncTarget" value="github-api">
+              <div class="sync-opt-info">
+                <strong>2. Tự Động Đẩy Thẳng Lên GitHub (Không Cần Cài Git Trên Máy)</strong>
+                <small>Đẩy trực tiếp qua GitHub REST API bằng Token cá nhân của bạn (dành cho máy chưa cài hoặc chưa cấu hình Git).</small>
+              </div>
+            </label>
+
+            <label class="sync-option-card">
+              <input type="radio" name="syncTarget" value="local-git">
+              <div class="sync-opt-info">
+                <strong>3. Chạy Git Commit &amp; Push Bằng Git Trên Máy</strong>
+                <small>Sử dụng phần mềm Git sẵn có trên máy tính của bạn (máy bạn đã có sẵn Git 2.54) để commit và push.</small>
+              </div>
+            </label>
+          </div>
+
+          <!-- Khung Cấu hình Git nhanh khi chọn Cách 3 -->
+          <div id="localGitAccountBox" class="local-git-account-box" style="display:none;background:#f8fafc;border:1px solid #cbd5e1;border-radius:10px;padding:12px 14px;margin-bottom:14px;">
+            <div style="font-weight:600;font-size:13px;color:#1e293b;margin-bottom:8px;display:flex;align-items:center;justify-content:space-between;">
+              <span style="display:flex;align-items:center;gap:6px;">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                Tài khoản Git máy tính (Cách 3):
+              </span>
+              <button type="button" id="btnQuickOpenGitSettings" style="background:none;border:none;color:#2563eb;font-size:12px;cursor:pointer;text-decoration:underline;">Cài Đặt Đầy Đủ ↗</button>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:8px;">
+              <div>
+                <label for="pushGitUser" style="font-size:11px;color:#64748b;display:block;margin-bottom:3px;font-weight:500;">Tài khoản (Username):</label>
+                <input type="text" id="pushGitUser" class="form-input" style="padding:6px 10px;font-size:12px;" value="Doanthuat" placeholder="Ví dụ: Doanthuat">
+              </div>
+              <div>
+                <label for="pushGitPass" style="font-size:11px;color:#64748b;display:block;margin-bottom:3px;font-weight:500;">Mật khẩu / Token:</label>
+                <input type="password" id="pushGitPass" class="form-input" style="padding:6px 10px;font-size:12px;" placeholder="Nhập mật khẩu hoặc PAT...">
+              </div>
+            </div>
+            <label style="display:flex;align-items:center;gap:8px;font-size:12px;color:#334155;cursor:pointer;padding-top:4px;">
+              <input type="checkbox" id="pushOpenTerminalCheck" style="width:16px;height:16px;" checked>
+              <span>🖥️ <strong>Tự động mở cửa sổ Terminal (màn hình đen)</strong> để xem Git chạy trực tiếp</span>
+            </label>
+          </div>
+
+          <!-- Lệnh Git mẫu để tự chạy nếu muốn -->
+          <div class="git-command-box">
+            <div class="git-cmd-header">
+              <span>💻 Lệnh Git tương ứng:</span>
+              <button type="button" class="btn-copy-cmd" id="btnCopyGitCmd">Sao Chép</button>
+            </div>
+            <code class="git-cmd-text" id="gitCmdPreview">git add . &amp;&amp; git commit -m "feat(seo): Cập nhật bài viết" &amp;&amp; git push origin main</code>
+          </div>
+
+          <!-- Thông báo hỗ trợ -->
+          <div style="background:rgba(37,99,235,0.06);border:1px solid rgba(37,99,235,0.2);border-radius:10px;padding:12px 14px;margin-bottom:16px;display:flex;align-items:flex-start;gap:10px;font-size:13px;line-height:1.5;color:var(--text-primary);">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2" style="flex-shrink:0;margin-top:2px;"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+            <div>
+              <strong style="color:#2563EB;display:block;margin-bottom:2px;">Tùy Chọn Đẩy Lên GitHub Linh Hoạt:</strong>
+              <span>Khi chọn Cách 3, hệ thống sẽ <strong>tự động mở cửa sổ Terminal</strong> chạy commit &amp; push với tài khoản và mật khẩu của bạn.</span>
+            </div>
+          </div>
+
+          <div class="modal-footer" style="display:flex;justify-content:space-between;align-items:center;">
+            <div>
+              <button type="button" class="btn btn-secondary" id="btnDownloadArticleJson" title="Tải file JSON bài viết này về máy">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                <span>Tải File JSON</span>
+              </button>
+            </div>
+            <div style="display:flex;gap:10px;">
+              <button type="button" class="btn btn-secondary" id="btnCancelPush">Hủy Bỏ</button>
+              <button type="button" class="btn btn-primary" id="btnConfirmPush">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Xác Nhận Cập Nhật</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal: Cài Đặt Đồng Bộ GitHub / Git Repository -->
+    <div class="modal-overlay" id="githubModal">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <div class="modal-title-wrap">
+            <div class="modal-icon">⚙️</div>
+            <div>
+              <h3 class="modal-title">Cấu Hình Tài Khoản &amp; Đẩy Code Lên GitHub</h3>
+              <p class="modal-sub">Cài đặt tài khoản/mật khẩu để tự động mở Git commit &amp; push</p>
+            </div>
+          </div>
+          <button type="button" class="modal-close" id="btnCloseGithubModal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div style="background:#f1f5f9;border-radius:8px;padding:10px 12px;margin-bottom:14px;font-size:12px;color:#334155;line-height:1.5;">
+            <strong>🖥️ Dành Cho Cách 3: Chạy Git Trên Máy Tính</strong>
+          </div>
+
+          <div class="form-group">
+            <label for="gitUsernameInput">Tài khoản Git (Username hoặc Email GitHub) <span class="req">*</span></label>
+            <input type="text" id="gitUsernameInput" class="form-input" placeholder="Ví dụ: Doanthuat" value="Doanthuat">
+          </div>
+
+          <div class="form-group">
+            <label for="gitPasswordInput">Mật khẩu hoặc Personal Access Token (PAT) <span class="req">*</span></label>
+            <input type="password" id="gitPasswordInput" class="form-input" placeholder="Nhập mật khẩu GitHub hoặc token ghp_...">
+            <div class="field-hint">Dùng để xác thực tự động khi lệnh <code>git push</code> chạy, tránh bị hỏi mật khẩu nhiều lần.</div>
+          </div>
+
+          <div class="form-group">
+            <label class="checkbox-label" style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer;">
+              <input type="checkbox" id="openTerminalCheck" style="width:16px;height:16px;" checked>
+              <span><strong>Tự động mở cửa sổ Terminal (màn hình đen)</strong> khi thực hiện Git commit &amp; push</span>
+            </label>
+          </div>
+
+          <div class="form-group">
+            <label for="repoPathInput">Đường Dẫn Thư Mục Dự Án Trên Máy</label>
+            <input type="text" id="repoPathInput" class="form-input" placeholder="D:\Duy_Tam\website_spintx_vn" value="D:\Duy_Tam\website_spintx_vn">
+          </div>
+
+          <div class="form-group">
+            <label for="ghBranchInput">Tên Nhánh Git (Branch)</label>
+            <input type="text" id="ghBranchInput" class="form-input" value="main">
+          </div>
+
+          <hr style="border:none;border-top:1px solid #e2e8f0;margin:16px 0;">
+
+          <div style="background:#f8fafc;border-radius:8px;padding:10px 12px;margin-bottom:14px;font-size:12px;color:#334155;line-height:1.5;">
+            <strong>🌐 Dành Cho Cách 2: Đẩy Qua GitHub REST API (Không cần Git)</strong>
+          </div>
+
+          <div class="form-group">
+            <div class="label-with-tip">
+              <label for="ghTokenInput">GitHub Personal Access Token (PAT) <small style="color:#64748b;">(Tùy chọn)</small></label>
+              <a href="https://github.com/settings/tokens" target="_blank" rel="noopener" style="font-size:12px;color:#2563EB;font-weight:600;">Lấy Token Tại Đây ↗</a>
+            </div>
+            <input type="password" id="ghTokenInput" class="form-input" placeholder="ghp_... hoặc github_pat_...">
+            <div class="field-hint">Chỉ cần nhập nếu bạn muốn dùng Cách 2 (đẩy trực tiếp qua mạng không cần Git).</div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" id="btnCancelGithub">Đóng</button>
+            <button type="button" class="btn btn-primary" id="btnSaveGithubConfig">Lưu Cấu Hình</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast-container" id="toastContainer"></div>
+
+  </div>
+
+  <script type="module" src="./src/scripts/app.js"></script>
+</body>
+</html>
