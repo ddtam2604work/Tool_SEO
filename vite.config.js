@@ -120,7 +120,7 @@ async function pushFileToGitHub(token, owner, repo, branch, filePath, contentStr
 }
 
 export default defineConfig({
-  base: '/Tool_SEO/',
+  base: './',
   server: {
     host: true,
     port: 5173

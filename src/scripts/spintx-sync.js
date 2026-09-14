@@ -124,7 +124,8 @@ export class SpintXSyncManager {
   }
 
   async loadArticles() {
-    const baseUrl = import.meta.env.BASE_URL || '/';
+    let baseUrl = import.meta.env.BASE_URL || './';
+    if (!baseUrl.endsWith('/')) baseUrl += '/';
     try {
       const res = await fetch('/api/spintx/articles');
       if (res.ok) {
@@ -135,8 +136,13 @@ export class SpintXSyncManager {
       }
     } catch (err) {
       console.warn('Load from API failed, trying fallback static file:', err);
-      const fallbackRes = await fetch(`${baseUrl}data/spintx_articles.json`);
-      this.articles = await fallbackRes.json();
+      try {
+        const fallbackRes = await fetch(`${baseUrl}data/spintx_articles.json`);
+        this.articles = await fallbackRes.json();
+      } catch (err2) {
+        const fallbackRes2 = await fetch('./data/spintx_articles.json');
+        this.articles = await fallbackRes2.json();
+      }
     }
 
     // Extract unique categories
