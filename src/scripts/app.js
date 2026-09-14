@@ -685,9 +685,10 @@ class SEOPulseApp {
 
   // ================= SPINTX RENDER METHODS =================
   async initSpintXModal() {
-    if (!this.spintx.articles || this.spintx.articles.length === 0) {
-      this.spintxArticlesGrid.innerHTML = '<div style="padding:40px;text-align:center;color:#64748b;">Đang tải 47 bài viết từ hệ thống SpintX...</div>';
+    try {
       await this.spintx.loadArticles();
+    } catch (err) {
+      console.warn('Load SpintX articles notice:', err);
     }
     if (this.spintxBadgeCount) {
       this.spintxBadgeCount.textContent = this.spintx.articles.length;

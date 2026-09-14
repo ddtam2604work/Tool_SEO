@@ -3,12 +3,14 @@
  * Completely Free of API Keys - Works via Local Git CLI & Local Repository Sync
  */
 
+import defaultArticles from '../data/spintx_articles.json';
+
 const REPO_CONFIG_KEY = 'seopulse_repo_config';
 const EMAIL_CONFIG_KEY = 'seopulse_email_config';
 
 export class SpintXSyncManager {
   constructor() {
-    this.articles = [];
+    this.articles = Array.isArray(defaultArticles) ? defaultArticles : [];
     this.categories = [];
     this.activeCategory = 'ALL';
     this.searchQuery = '';
@@ -16,6 +18,13 @@ export class SpintXSyncManager {
     
     this.repoConfig = this.loadRepoConfig();
     this.emailConfig = this.loadEmailConfig();
+
+    // Extract initial categories
+    const cats = new Set();
+    this.articles.forEach(a => {
+      if (a.category) cats.add(a.category.trim());
+    });
+    this.categories = Array.from(cats);
   }
 
   loadEmailConfig() {
@@ -124,25 +133,23 @@ export class SpintXSyncManager {
   }
 
   async loadArticles() {
-    let baseUrl = import.meta.env.BASE_URL || './';
-    if (!baseUrl.endsWith('/')) baseUrl += '/';
+    if (!this.articles || this.articles.length === 0) {
+      this.articles = Array.isArray(defaultArticles) ? defaultArticles : [];
+    }
+
     try {
       const res = await fetch('/api/spintx/articles');
       if (res.ok) {
-        this.articles = await res.json();
-      } else {
-        const fallbackRes = await fetch(`${baseUrl}data/spintx_articles.json`);
-        this.articles = await fallbackRes.json();
+        const ct = res.headers.get('content-type') || '';
+        if (ct.includes('application/json')) {
+          const fresh = await res.json();
+          if (Array.isArray(fresh) && fresh.length > 0) {
+            this.articles = fresh;
+          }
+        }
       }
     } catch (err) {
-      console.warn('Load from API failed, trying fallback static file:', err);
-      try {
-        const fallbackRes = await fetch(`${baseUrl}data/spintx_articles.json`);
-        this.articles = await fallbackRes.json();
-      } catch (err2) {
-        const fallbackRes2 = await fetch('./data/spintx_articles.json');
-        this.articles = await fallbackRes2.json();
-      }
+      // Quietly keep defaultArticles
     }
 
     // Extract unique categories
