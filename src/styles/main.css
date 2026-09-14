@@ -587,7 +587,7 @@ html, body {
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg);
   width: 100%;
-  max-width: 520px;
+  max-width: 620px;
   overflow: hidden;
   animation: modal-pop 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
@@ -653,9 +653,13 @@ html, body {
 
 .modal-footer {
   display: flex;
-  justify-content: flex-end;
-  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
   margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border-light);
 }
 
 /* Toast Notifications */

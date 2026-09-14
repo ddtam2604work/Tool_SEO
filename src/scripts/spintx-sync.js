@@ -4,6 +4,7 @@
  */
 
 const REPO_CONFIG_KEY = 'seopulse_repo_config';
+const EMAIL_CONFIG_KEY = 'seopulse_email_config';
 
 export class SpintXSyncManager {
   constructor() {
@@ -14,6 +15,67 @@ export class SpintXSyncManager {
     this.currentSpintXArticle = null;
     
     this.repoConfig = this.loadRepoConfig();
+    this.emailConfig = this.loadEmailConfig();
+  }
+
+  loadEmailConfig() {
+    try {
+      const saved = localStorage.getItem(EMAIL_CONFIG_KEY);
+      const defaults = {
+        toEmail: 'ddtam2604.work@gmail.com',
+        smtpHost: 'smtp.gmail.com',
+        smtpPort: 587,
+        smtpUser: 'ddtam2604.work@gmail.com',
+        smtpPass: ''
+      };
+      if (saved) {
+        return { ...defaults, ...JSON.parse(saved) };
+      }
+      return defaults;
+    } catch {
+      return {
+        toEmail: 'ddtam2604.work@gmail.com',
+        smtpHost: 'smtp.gmail.com',
+        smtpPort: 587,
+        smtpUser: 'ddtam2604.work@gmail.com',
+        smtpPass: ''
+      };
+    }
+  }
+
+  saveEmailConfig(config) {
+    this.emailConfig = { ...this.emailConfig, ...config };
+    localStorage.setItem(EMAIL_CONFIG_KEY, JSON.stringify(this.emailConfig));
+  }
+
+  async sendEmailNotification(docState, note, recipientEmail) {
+    const updatedArticle = this.getUpdatedArticleObject(docState);
+    const toEmail = recipientEmail || this.emailConfig.toEmail || 'ddtam2604.work@gmail.com';
+
+    const res = await fetch('/api/email/send-notification', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        toEmail,
+        note: note || `Tối ưu SEO & Google Ads bài viết "${docState.title}"`,
+        updatedArticle,
+        smtpConfig: {
+          host: this.emailConfig.smtpHost,
+          port: this.emailConfig.smtpPort,
+          user: this.emailConfig.smtpUser,
+          pass: this.emailConfig.smtpPass
+        }
+      })
+    });
+
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.error || 'Lỗi gửi email thông báo.');
+    }
+
+    const result = await res.json();
+    await this.loadArticles();
+    return result;
   }
 
   loadRepoConfig() {
@@ -24,8 +86,8 @@ export class SpintXSyncManager {
         branch: 'main',
         autoGitPush: false,
         githubToken: '',
-        gitUsername: 'Doanthuat',
-        gitPassword: '',
+        gitUsername: 'ddtam2604work',
+        gitPassword: 'Duytam262004@',
         openTerminal: true,
         owner: 'spintx-vn',
         repo: 'website_spintx_vn'
@@ -35,7 +97,8 @@ export class SpintXSyncManager {
         return {
           ...defaults,
           ...parsed,
-          gitUsername: parsed.gitUsername || 'Doanthuat',
+          gitUsername: parsed.gitUsername || 'ddtam2604work',
+          gitPassword: parsed.gitPassword || 'Duytam262004@',
           openTerminal: parsed.openTerminal !== undefined ? parsed.openTerminal : true
         };
       }
@@ -46,8 +109,8 @@ export class SpintXSyncManager {
         branch: 'main',
         autoGitPush: false,
         githubToken: '',
-        gitUsername: 'Doanthuat',
-        gitPassword: '',
+        gitUsername: 'ddtam2604work',
+        gitPassword: 'Duytam262004@',
         openTerminal: true,
         owner: 'spintx-vn',
         repo: 'website_spintx_vn'
@@ -137,6 +200,10 @@ export class SpintXSyncManager {
       spintxId: art.id,
       spintxOriginal: art,
       title: art.title,
+      category: art.category || 'NỖI ĐAU VẬN HÀNH',
+      quickSummary: art.quickSummary || art.excerpt || '',
+      publishedDate: art.publishedDate || new Date().toISOString().split('T')[0],
+      formattedDate: art.formattedDate || '9 Tháng 5, 2026',
       focusKeyword: focusKw || 'quản lý vận hành studio',
       lsiKeywords: lsiKeywords.length > 0 ? lsiKeywords : ['chuẩn hóa quy trình', 'phần mềm studio', 'chống thất thoát'],
       intent: 'commercial',
@@ -187,11 +254,15 @@ export class SpintXSyncManager {
 
     return {
       ...(docState.spintxOriginal || {}),
-      id: docState.spintxId || 'custom_spintx',
+      id: docState.spintxId || docState.id || 'custom_spintx',
       slug: docState.slug,
       title: docState.seoTitle || docState.title,
-      excerpt: docState.metaDesc,
-      quickSummary: docState.metaDesc,
+      category: docState.category || docState.spintxOriginal?.category || 'NỖI ĐAU VẬN HÀNH',
+      author: docState.author ? (typeof docState.author === 'object' ? docState.author : { id: 'tri', name: docState.author }) : (docState.spintxOriginal?.author || { id: 'tri', name: 'Trí' }),
+      publishedDate: docState.publishedDate || docState.spintxOriginal?.publishedDate || new Date().toISOString().split('T')[0],
+      formattedDate: docState.formattedDate || docState.spintxOriginal?.formattedDate || '9 Tháng 5, 2026',
+      excerpt: docState.metaDesc || docState.excerpt,
+      quickSummary: docState.quickSummary || docState.metaDesc || docState.excerpt,
       contentHtml: docState.contentHtml,
       tableOfContents: updatedToc.length > 0 ? updatedToc : docState.spintxOriginal?.tableOfContents || [],
       updatedAt: new Date().toISOString()

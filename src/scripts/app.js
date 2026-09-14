@@ -109,6 +109,7 @@ class SEOPulseApp {
     this.seoTitleInput = document.getElementById('seoTitleInput');
     this.metaDescInput = document.getElementById('metaDescInput');
     this.slugInput = document.getElementById('slugInput');
+    this.spintxCategorySelect = document.getElementById('spintxCategorySelect');
     this.authorInput = document.getElementById('authorInput');
     this.ctaTextInput = document.getElementById('ctaTextInput');
     this.titleCounter = document.getElementById('titleCounter');
@@ -121,6 +122,15 @@ class SEOPulseApp {
     this.savedDocsCount = document.getElementById('savedDocsCount');
     this.btnNewDoc = document.getElementById('btnNewDoc');
     this.btnLoadDemo = document.getElementById('btnLoadDemo');
+
+    // SpintX Detail Page Header Display Elements
+    this.spintxBadgeDisplay = document.getElementById('spintxBadgeDisplay');
+    this.spintxTitleDisplay = document.getElementById('spintxTitleDisplay');
+    this.spintxAuthorDisplay = document.getElementById('spintxAuthorDisplay');
+    this.spintxDateDisplay = document.getElementById('spintxDateDisplay');
+    this.spintxCatPillDisplay = document.getElementById('spintxCatPillDisplay');
+    this.spintxSummaryText = document.getElementById('spintxSummaryText');
+    this.spintxTocList = document.getElementById('spintxTocList');
 
     // Editor elements
     this.editor = document.getElementById('editorContent');
@@ -244,6 +254,7 @@ class SEOPulseApp {
     this.seoTitleInput.addEventListener('input', triggerDebouncedAnalysis);
     this.metaDescInput.addEventListener('input', triggerDebouncedAnalysis);
     this.slugInput.addEventListener('input', triggerDebouncedAnalysis);
+    if (this.spintxCategorySelect) this.spintxCategorySelect.addEventListener('change', triggerDebouncedAnalysis);
     this.authorInput.addEventListener('input', triggerDebouncedAnalysis);
     this.ctaTextInput.addEventListener('input', triggerDebouncedAnalysis);
 
@@ -522,67 +533,41 @@ class SEOPulseApp {
       this.spintxSearchInput.focus();
     });
 
-    // 3. Open Push to Website Modal
+    // 3. Open Email Notification Modal
+    this.pushModalGitUser = document.getElementById('pushModalGitUser');
+    this.btnEditGitSettingsInModal = document.getElementById('btnEditGitSettingsInModal');
+    this.emailToRecipientInput = document.getElementById('emailToRecipientInput');
+    this.smtpHostInput = document.getElementById('smtpHostInput');
+    this.smtpPortInput = document.getElementById('smtpPortInput');
+    this.smtpUserInput = document.getElementById('smtpUserInput');
+
     this.btnOpenPushModal.addEventListener('click', () => {
       this.pushArticleTitle.textContent = this.currentDoc.seoTitle || this.currentDoc.title || 'Bài viết chưa đặt tên';
       this.pushArticleSlug.textContent = `https://spintx.vn/kien-thuc-van-hanh/${this.currentDoc.slug || 'slug'}`;
       
-      const cmd = this.spintx.getGitTerminalCommand(this.currentDoc, this.commitMessageInput.value);
-      if (this.gitCmdPreview) this.gitCmdPreview.textContent = cmd;
-
-      // Populate quick git account fields
-      const cfg = this.spintx.repoConfig;
-      if (this.pushGitUser) this.pushGitUser.value = cfg.gitUsername || 'Doanthuat';
-      if (this.pushGitPass) this.pushGitPass.value = cfg.gitPassword || '';
-      if (this.pushOpenTerminalCheck) this.pushOpenTerminalCheck.checked = cfg.openTerminal !== false;
-
-      // Toggle localGitAccountBox visibility based on selected radio
-      const selectedTarget = document.querySelector('input[name="syncTarget"]:checked')?.value;
-      if (this.localGitAccountBox) {
-        this.localGitAccountBox.style.display = selectedTarget === 'local-git' ? 'block' : 'none';
+      const emailCfg = this.spintx.emailConfig;
+      if (this.pushModalGitUser) {
+        this.pushModalGitUser.textContent = emailCfg.toEmail || 'ddtam2604.work@gmail.com';
+      }
+      if (this.emailToRecipientInput) {
+        this.emailToRecipientInput.value = emailCfg.toEmail || 'ddtam2604.work@gmail.com';
       }
 
       this.pushModal.classList.add('show');
     });
 
     const closePushModal = () => this.pushModal.classList.remove('show');
-    this.btnClosePushModal.addEventListener('click', closePushModal);
-    this.btnCancelPush.addEventListener('click', closePushModal);
+    if (this.btnClosePushModal) this.btnClosePushModal.addEventListener('click', closePushModal);
+    if (this.btnCancelPush) this.btnCancelPush.addEventListener('click', closePushModal);
 
-    // Toggle local git credentials box when radio option changes
-    document.querySelectorAll('input[name="syncTarget"]').forEach(radio => {
-      radio.addEventListener('change', (e) => {
-        if (this.localGitAccountBox) {
-          this.localGitAccountBox.style.display = e.target.value === 'local-git' ? 'block' : 'none';
-        }
-      });
-    });
-
-    if (this.btnQuickOpenGitSettings) {
-      this.btnQuickOpenGitSettings.addEventListener('click', () => {
+    if (this.btnEditGitSettingsInModal) {
+      this.btnEditGitSettingsInModal.addEventListener('click', () => {
         closePushModal();
         this.btnGitHubSettings.click();
       });
     }
 
-    // Live update Git Command preview when commit message changes
-    this.commitMessageInput.addEventListener('input', () => {
-      if (this.gitCmdPreview) {
-        this.gitCmdPreview.textContent = this.spintx.getGitTerminalCommand(this.currentDoc, this.commitMessageInput.value);
-      }
-    });
-
-    // Copy Git Command Button
-    if (this.btnCopyGitCmd) {
-      this.btnCopyGitCmd.addEventListener('click', () => {
-        const cmd = this.gitCmdPreview ? this.gitCmdPreview.textContent : '';
-        navigator.clipboard.writeText(cmd).then(() => {
-          this.showToast('Đã sao chép lệnh Git vào Clipboard!', 'success');
-        });
-      });
-    }
-
-    // Download Article JSON button in Push modal (No API Key needed)
+    // Download Article JSON button in Push modal
     if (this.btnDownloadArticleJson) {
       this.btnDownloadArticleJson.addEventListener('click', () => {
         const art = this.spintx.getUpdatedArticleObject(this.currentDoc);
@@ -598,73 +583,57 @@ class SEOPulseApp {
       });
     }
 
-    // 4. Confirm Push / Update (NO API KEY)
+    // Download TypeScript file for SpintX codebase
+    this.btnDownloadTsFile = document.getElementById('btnDownloadTsFile');
+    if (this.btnDownloadTsFile) {
+      this.btnDownloadTsFile.addEventListener('click', () => {
+        window.location.href = '/api/spintx/export-ts';
+        this.showToast('Đã tải xuống file "resources.constants.ts" chuẩn cho mã nguồn SpintX!', 'success');
+      });
+    }
+
+    // 4. Confirm Email Notification
     this.btnConfirmPush.addEventListener('click', async () => {
-      const commitMsg = this.commitMessageInput.value.trim() || `feat(seo): Cập nhật bài viết "${this.currentDoc.title}"`;
-      const selectedTarget = document.querySelector('input[name="syncTarget"]:checked')?.value || 'local-db';
-      const runGitPush = selectedTarget === 'local-git';
+      const recipient = this.emailToRecipientInput ? this.emailToRecipientInput.value.trim() : (this.spintx.emailConfig.toEmail || 'ddtam2604.work@gmail.com');
+      const noteMsg = this.commitMessageInput.value.trim() || `Tối ưu SEO & Google Ads bài viết "${this.currentDoc.title}"`;
+
+      if (!recipient) {
+        alert('Vui lòng nhập địa chỉ Email nhận thông báo!');
+        return;
+      }
 
       this.btnConfirmPush.disabled = true;
-      this.btnConfirmPush.innerHTML = '<span>Đang cập nhật...</span>';
+      this.btnConfirmPush.innerHTML = '<span>Đang gửi Email...</span>';
 
       try {
-        if (selectedTarget === 'github-api') {
-          // Direct GitHub REST API (No Git CLI needed)
-          const res = await this.spintx.pushViaGitHubApi(this.currentDoc, commitMsg);
-          this.showToast('Đã đẩy bài viết thành công lên GitHub (Không cần Git)!', 'success');
-        } else {
-          // If local-git, save quick username & password
-          const openTerm = this.pushOpenTerminalCheck ? this.pushOpenTerminalCheck.checked : false;
-          if (selectedTarget === 'local-git') {
-            const u = this.pushGitUser ? this.pushGitUser.value.trim() : '';
-            const p = this.pushGitPass ? this.pushGitPass.value.trim() : '';
-            this.spintx.saveRepoConfig({
-              gitUsername: u || this.spintx.repoConfig.gitUsername,
-              gitPassword: p || this.spintx.repoConfig.gitPassword,
-              openTerminal: openTerm
-            });
-          }
-
-          // Local DB or Local Git CLI
-          const res = await this.spintx.updateAndPushGit(this.currentDoc, commitMsg, runGitPush, openTerm);
-          if (runGitPush) {
-            if (openTerm) {
-              this.showToast('Đã mở cửa sổ Terminal và tự động chạy Git commit & push!', 'success');
-            } else {
-              const out = (res.gitOutput || '').toLowerCase();
-              if (out.includes('fatal') || out.includes('error:') || out.includes('permission denied')) {
-                this.showToast(`Đã lưu file vào thư mục! Git CLI: ${res.gitOutput.substring(0, 90)}...`, 'warning');
-              } else {
-                this.showToast('Đã lưu bài viết & chạy Git Push thành công!', 'success');
-              }
-            }
-          } else {
-            this.showToast(res.message || 'Đã cập nhật bài viết thành công!', 'success');
-          }
+        const res = await this.spintx.sendEmailNotification(this.currentDoc, noteMsg, recipient);
+        
+        this.showToast(`Đã lưu bài viết & gửi email thông báo thành công về ${recipient}!`, 'success');
+        if (res.previewUrl) {
+          console.log('Ethereal Test Email Preview URL:', res.previewUrl);
         }
         
         closePushModal();
       } catch (err) {
-        alert(`Lỗi cập nhật: ${err.message}`);
+        alert(`Lỗi gửi Email thông báo: ${err.message}`);
       } finally {
         this.btnConfirmPush.disabled = false;
         this.btnConfirmPush.innerHTML = `
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-          <span>Xác Nhận Cập Nhật</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+          <span>📧 Gửi Thông Báo Email</span>
         `;
       }
     });
 
-    // 5. Git Repo Settings Modal
+    // 5. Email Notification Settings Modal
     this.btnGitHubSettings.addEventListener('click', () => {
-      const cfg = this.spintx.repoConfig;
-      this.repoPathInput.value = cfg.repoPath || 'D:\\Duy_Tam\\website_spintx_vn';
-      this.ghBranchInput.value = cfg.branch || 'main';
-      if (this.ghTokenInput) this.ghTokenInput.value = cfg.githubToken || '';
-      if (this.gitUsernameInput) this.gitUsernameInput.value = cfg.gitUsername || 'Doanthuat';
-      if (this.gitPasswordInput) this.gitPasswordInput.value = cfg.gitPassword || '';
-      if (this.openTerminalCheck) this.openTerminalCheck.checked = cfg.openTerminal !== false;
-      if (this.autoGitPushCheck) this.autoGitPushCheck.checked = !!cfg.autoGitPush;
+      const emailCfg = this.spintx.emailConfig;
+      if (this.gitUsernameInput) this.gitUsernameInput.value = emailCfg.toEmail || 'ddtam2604.work@gmail.com';
+      if (this.smtpHostInput) this.smtpHostInput.value = emailCfg.smtpHost || 'smtp.gmail.com';
+      if (this.smtpPortInput) this.smtpPortInput.value = emailCfg.smtpPort || 587;
+      if (this.smtpUserInput) this.smtpUserInput.value = emailCfg.smtpUser || emailCfg.toEmail || 'ddtam2604.work@gmail.com';
+      if (this.gitPasswordInput) this.gitPasswordInput.value = emailCfg.smtpPass || '';
+
       this.githubModal.classList.add('show');
     });
 
@@ -673,17 +642,22 @@ class SEOPulseApp {
     this.btnCancelGithub.addEventListener('click', closeGithubModal);
 
     this.btnSaveGithubConfig.addEventListener('click', () => {
-      this.spintx.saveRepoConfig({
-        repoPath: this.repoPathInput.value.trim() || 'D:\\Duy_Tam\\website_spintx_vn',
-        branch: this.ghBranchInput.value.trim() || 'main',
-        githubToken: this.ghTokenInput ? this.ghTokenInput.value.trim() : '',
-        gitUsername: this.gitUsernameInput ? this.gitUsernameInput.value.trim() : 'Doanthuat',
-        gitPassword: this.gitPasswordInput ? this.gitPasswordInput.value.trim() : '',
-        openTerminal: this.openTerminalCheck ? this.openTerminalCheck.checked : true,
-        autoGitPush: this.autoGitPushCheck ? this.autoGitPushCheck.checked : false
+      const toEmail = this.gitUsernameInput ? this.gitUsernameInput.value.trim() : 'ddtam2604.work@gmail.com';
+      const host = this.smtpHostInput ? this.smtpHostInput.value.trim() : 'smtp.gmail.com';
+      const port = this.smtpPortInput ? Number(this.smtpPortInput.value) || 587 : 587;
+      const user = this.smtpUserInput ? this.smtpUserInput.value.trim() : toEmail;
+      const pass = this.gitPasswordInput ? this.gitPasswordInput.value.trim() : '';
+
+      this.spintx.saveEmailConfig({
+        toEmail,
+        smtpHost: host,
+        smtpPort: port,
+        smtpUser: user,
+        smtpPass: pass
       });
+
+      this.showToast(`Đã lưu cấu hình Email thông báo (${toEmail}) thành công!`, 'success');
       closeGithubModal();
-      this.showToast('Đã lưu cấu hình Git repository thành công!', 'success');
     });
   }
 
@@ -823,9 +797,11 @@ class SEOPulseApp {
     this.currentDoc.seoTitle = this.seoTitleInput.value.trim();
     this.currentDoc.metaDesc = this.metaDescInput.value.trim();
     this.currentDoc.slug = this.slugInput.value.trim();
+    if (this.spintxCategorySelect) this.currentDoc.category = this.spintxCategorySelect.value;
     this.currentDoc.author = this.authorInput.value.trim();
     this.currentDoc.ctaText = this.ctaTextInput.value.trim();
     this.currentDoc.contentHtml = this.editor.innerHTML;
+    this.renderSpintXArticleHeader();
   }
 
   syncStateToInputs() {
@@ -835,9 +811,53 @@ class SEOPulseApp {
     this.seoTitleInput.value = this.currentDoc.seoTitle || '';
     this.metaDescInput.value = this.currentDoc.metaDesc || '';
     this.slugInput.value = this.currentDoc.slug || '';
+    if (this.spintxCategorySelect) this.spintxCategorySelect.value = this.currentDoc.category || 'NỖI ĐAU VẬN HÀNH';
     this.authorInput.value = this.currentDoc.author || '';
     this.ctaTextInput.value = this.currentDoc.ctaText || '';
     this.editor.innerHTML = this.currentDoc.contentHtml || '';
+    this.renderSpintXArticleHeader();
+  }
+
+  renderSpintXArticleHeader() {
+    const cat = this.currentDoc.category || 'NỖI ĐAU VẬN HÀNH';
+    if (this.spintxBadgeDisplay) this.spintxBadgeDisplay.textContent = cat;
+    if (this.spintxCatPillDisplay) this.spintxCatPillDisplay.textContent = cat;
+    
+    const title = this.currentDoc.seoTitle || this.currentDoc.title || 'Tiêu đề bài viết';
+    if (this.spintxTitleDisplay) this.spintxTitleDisplay.textContent = title;
+    
+    const author = typeof this.currentDoc.author === 'object' ? this.currentDoc.author?.name || 'Trí' : (this.currentDoc.author || 'Trí');
+    if (this.spintxAuthorDisplay) this.spintxAuthorDisplay.textContent = author;
+    
+    const date = this.currentDoc.formattedDate || '9 Tháng 5, 2026';
+    if (this.spintxDateDisplay) this.spintxDateDisplay.textContent = date;
+    
+    const summary = this.currentDoc.quickSummary || this.currentDoc.metaDesc || '';
+    if (this.spintxSummaryText) this.spintxSummaryText.textContent = summary;
+    
+    if (this.spintxTocList) {
+      this.spintxTocList.innerHTML = '';
+      const tocItems = this.spintx.extractTableOfContents(this.currentDoc.contentHtml);
+      const itemsToRender = (tocItems && tocItems.length > 0) ? tocItems : (this.currentDoc.tableOfContents || []);
+      
+      if (itemsToRender && itemsToRender.length > 0) {
+        itemsToRender.forEach(item => {
+          const li = document.createElement('li');
+          li.className = `toc-item ${item.level === 3 ? 'sub-item' : ''}`;
+          li.innerHTML = `<span class="toc-bullet">•</span><span>${item.title}</span>`;
+          li.addEventListener('click', () => {
+            const headings = Array.from(this.editor.querySelectorAll('h2, h3'));
+            const targetH = headings.find(h => h.textContent.trim() === item.title.trim() || h.id === item.id);
+            if (targetH) {
+              targetH.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+          });
+          this.spintxTocList.appendChild(li);
+        });
+      } else {
+        this.spintxTocList.innerHTML = '<li style="font-size:12.5px;color:#94a3b8;font-style:italic;">Mục lục sẽ tự động cập nhật khi bạn thêm thẻ H2, H3 trong bài viết.</li>';
+      }
+    }
   }
 
   renderLsiTags() {

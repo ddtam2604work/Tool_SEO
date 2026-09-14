@@ -69,10 +69,10 @@
             <span class="spintx-count-badge" id="spintxBadgeCount">47</span>
           </button>
 
-          <!-- Nút Cập Nhật Lên Trang SpintX (Hiển thị nổi bật) -->
-          <button type="button" class="btn btn-push-spintx" id="btnOpenPushModal" title="Cập nhật nội dung bài viết này lên website spintx.vn / GitHub repository">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
-            <span>Cập Nhật Lên Trang</span>
+          <!-- Nút Gửi Thông Báo Email -->
+          <button type="button" class="btn btn-push-spintx" id="btnOpenPushModal" style="background:linear-gradient(135deg,#0284c7 0%,#0369a1 100%);color:#ffffff;" title="Lưu bài viết và gửi thông báo thay đổi qua Email">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+            <span>Gửi Thông Báo Email</span>
           </button>
 
           <button type="button" class="btn btn-secondary" id="btnTemplates" title="Chọn mẫu bài viết hoặc dàn ý tạo sẵn">
@@ -80,8 +80,8 @@
             <span>Mẫu Bài Viết</span>
           </button>
 
-          <button type="button" class="btn btn-icon-only" id="btnGitHubSettings" title="Cài đặt đồng bộ Git cục bộ (Không cần API Key)">
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+          <button type="button" class="btn btn-icon-only" id="btnGitHubSettings" title="Cấu hình Email nhận thông báo & SMTP">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
           </button>
 
           <div class="dropdown" id="exportDropdown">
@@ -214,9 +214,22 @@
                 <button type="button" class="btn-text-action" id="btnAutoSlug">Tự tạo từ Title</button>
               </div>
               <div class="input-slug-prefix">
-                <span class="slug-prefix">https://yoursite.com/</span>
+                <span class="slug-prefix">https://spintx.vn/kien-thuc-van-hanh/</span>
                 <input type="text" id="slugInput" value="dich-vu-seo-tong-the-uy-tin">
               </div>
+            </div>
+
+            <!-- Chuyên Mục SpintX -->
+            <div class="form-group">
+              <div class="label-with-tip">
+                <label for="spintxCategorySelect">Chuyên Mục Bài Viết (SpintX)</label>
+                <span class="info-badge" style="background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe;" title="Phân bổ bài viết vào 3 chuyên mục kiến thức vận hành SpintX">SpintX Category</span>
+              </div>
+              <select id="spintxCategorySelect" class="form-select">
+                <option value="NỖI ĐAU VẬN HÀNH">NỖI ĐAU VẬN HÀNH</option>
+                <option value="CHUẨN HÓA VẬN HÀNH">CHUẨN HÓA VẬN HÀNH</option>
+                <option value="GIẢI PHÁP SPINTX">GIẢI PHÁP SPINTX</option>
+              </select>
             </div>
 
             <!-- Thông tin tác giả (EEAT) -->
@@ -347,8 +360,49 @@
 
         <!-- Main Editable Canvas -->
         <div class="editor-canvas-wrap">
-          <div class="editor-canvas" id="editorContent" contenteditable="true" spellcheck="false" data-placeholder="Bắt đầu soạn thảo bài viết của bạn tại đây... Sử dụng các tiêu đề H1, H2, H3 và chèn các Smart Blocks để đạt điểm Google tuyệt đối!">
-            <!-- Default Content Loaded via JS -->
+          <div class="editor-paper">
+            
+            <!-- SpintX Header Card (Khung bài viết chuẩn SpintX.vn) -->
+            <div class="spintx-header-card" id="spintxHeaderCard">
+              <div class="spintx-badge-wrap">
+                <span class="spintx-category-badge" id="spintxBadgeDisplay">NỖI ĐAU VẬN HÀNH</span>
+              </div>
+              <h1 class="spintx-article-title" id="spintxTitleDisplay">Trùng lịch đi show nhân viên: 5 nguyên nhân và giải pháp năm 2026</h1>
+              
+              <div class="spintx-meta-row" id="spintxMetaDisplay">
+                <span class="spintx-meta-item">
+                  <svg width="15" height="15" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/></svg>
+                  <span id="spintxAuthorDisplay">Trí</span>
+                </span>
+                <span class="spintx-meta-dot">•</span>
+                <span class="spintx-meta-item">
+                  <svg width="15" height="15" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/></svg>
+                  <span id="spintxDateDisplay">9 Tháng 5, 2026</span>
+                </span>
+                <span class="spintx-meta-dot">•</span>
+                <span class="spintx-category-pill" id="spintxCatPillDisplay">NỖI ĐAU VẬN HÀNH</span>
+              </div>
+
+              <!-- Quick Summary Box (Tóm tắt nhanh) -->
+              <div class="spintx-quick-summary-box" id="spintxSummaryBox">
+                <h3 class="summary-title">Tóm tắt nhanh</h3>
+                <p class="summary-content" id="spintxSummaryText">Trùng lịch đi show nhân viên là tình trạng một thợ chụp hoặc chuyên viên make-up bị phân công cho 2 khách hàng trong cùng khung giờ do điều phối qua tin nhắn rời rạc...</p>
+              </div>
+
+              <!-- Table of Contents (Mục lục) -->
+              <div class="spintx-toc-card" id="spintxTocCard">
+                <h4 class="toc-title">Mục lục</h4>
+                <ul class="toc-list" id="spintxTocList">
+                  <!-- Dynamic TOC items -->
+                </ul>
+              </div>
+            </div>
+
+            <!-- Main Editable Body -->
+            <div class="editor-canvas" id="editorContent" contenteditable="true" spellcheck="false" data-placeholder="Bắt đầu soạn thảo bài viết của bạn tại đây...">
+              <!-- Default Content Loaded via JS -->
+            </div>
+
           </div>
         </div>
 
@@ -718,15 +772,15 @@
       </div>
     </div>
 
-    <!-- Modal: Cập Nhật Lên Trang / GitHub (Push Modal) -->
+    <!-- Modal: Gửi Thông Báo Thay Đổi Bài Viết Qua Email -->
     <div class="modal-overlay" id="pushModal">
       <div class="modal-dialog">
         <div class="modal-header">
           <div class="modal-title-wrap">
-            <div class="modal-icon">🚀</div>
+            <div class="modal-icon">📧</div>
             <div>
-              <h3 class="modal-title">Cập Nhật Bài Viết Lên Trang SPINTX</h3>
-              <p class="modal-sub" id="pushModalSub">Đồng bộ nội dung đã tối ưu vào hệ thống dữ liệu</p>
+              <h3 class="modal-title">Gửi Thông Báo Bài Viết Qua Email</h3>
+              <p class="modal-sub" id="pushModalSub">Lưu cập nhật bài viết và gửi thư thông báo chi tiết đến email của bạn</p>
             </div>
           </div>
           <button type="button" class="modal-close" id="btnClosePushModal">&times;</button>
@@ -743,96 +797,58 @@
             </div>
             <div class="push-item">
               <span class="push-label">Mục tiêu:</span>
-              <span class="badge-status-online">Cơ Sở Dữ Liệu SpintX &amp; GitHub Sync</span>
+              <span class="badge-status-online" style="background:#e0f2fe;color:#0369a1;border-color:#bae6fd;">Email Notification &amp; Saved</span>
             </div>
+          </div>
+
+          <!-- Thẻ Email nhận thông báo -->
+          <div class="github-account-status-card" style="background:#f8fafc;border:1px solid #cbd5e1;border-radius:10px;padding:12px 16px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;">
+            <div style="display:flex;align-items:center;gap:10px;">
+              <div style="width:36px;height:36px;border-radius:50%;background:#0284c7;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px;">📧</div>
+              <div>
+                <div style="font-size:11px;color:#64748b;font-weight:500;">Email nhận thông báo:</div>
+                <strong id="pushModalGitUser" style="font-size:14px;color:#0f172a;">ddtam2604.work@gmail.com</strong>
+              </div>
+            </div>
+            <button type="button" id="btnEditGitSettingsInModal" style="background:none;border:none;color:#0284c7;font-size:12px;font-weight:600;cursor:pointer;text-decoration:underline;">Cài Đặt Email ⚙️</button>
           </div>
 
           <div class="form-group">
-            <label for="commitMessageInput">Ghi chú cập nhật (Commit Message) <span class="req">*</span></label>
+            <label for="emailToRecipientInput">Gửi đến Email <span class="req">*</span></label>
+            <input type="email" id="emailToRecipientInput" class="form-input" value="ddtam2604.work@gmail.com" placeholder="Ví dụ: ddtam2604.work@gmail.com">
+          </div>
+
+          <div class="form-group">
+            <label for="commitMessageInput">Ghi chú thay đổi nội dung bài viết <span class="req">*</span></label>
             <input type="text" id="commitMessageInput" class="form-input" value="Tối ưu SEO &amp; Google Ads nội dung bài viết">
           </div>
 
-          <div class="sync-options-group">
-            <label class="sync-option-card active">
-              <input type="radio" name="syncTarget" value="local-db" checked>
-              <div class="sync-opt-info">
-                <strong>1. Cập Nhật Vào Cơ Sở Dữ Liệu SpintX (Nhanh &amp; Tức thì)</strong>
-                <small>Cập nhật ngay vào kho dữ liệu 47 bài viết, tự động tính toán lại Mục Lục TOC và chấm điểm SEO (Không cần mạng hay token).</small>
-              </div>
-            </label>
-
-            <label class="sync-option-card">
-              <input type="radio" name="syncTarget" value="github-api">
-              <div class="sync-opt-info">
-                <strong>2. Tự Động Đẩy Thẳng Lên GitHub (Không Cần Cài Git Trên Máy)</strong>
-                <small>Đẩy trực tiếp qua GitHub REST API bằng Token cá nhân của bạn (dành cho máy chưa cài hoặc chưa cấu hình Git).</small>
-              </div>
-            </label>
-
-            <label class="sync-option-card">
-              <input type="radio" name="syncTarget" value="local-git">
-              <div class="sync-opt-info">
-                <strong>3. Chạy Git Commit &amp; Push Bằng Git Trên Máy</strong>
-                <small>Sử dụng phần mềm Git sẵn có trên máy tính của bạn (máy bạn đã có sẵn Git 2.54) để commit và push.</small>
-              </div>
-            </label>
-          </div>
-
-          <!-- Khung Cấu hình Git nhanh khi chọn Cách 3 -->
-          <div id="localGitAccountBox" class="local-git-account-box" style="display:none;background:#f8fafc;border:1px solid #cbd5e1;border-radius:10px;padding:12px 14px;margin-bottom:14px;">
-            <div style="font-weight:600;font-size:13px;color:#1e293b;margin-bottom:8px;display:flex;align-items:center;justify-content:space-between;">
-              <span style="display:flex;align-items:center;gap:6px;">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-                Tài khoản Git máy tính (Cách 3):
-              </span>
-              <button type="button" id="btnQuickOpenGitSettings" style="background:none;border:none;color:#2563eb;font-size:12px;cursor:pointer;text-decoration:underline;">Cài Đặt Đầy Đủ ↗</button>
+          <!-- Xem trước mẫu Email -->
+          <div class="git-command-box" style="background:#f0f9ff;border-color:#bae6fd;">
+            <div class="git-cmd-header" style="color:#0369a1;">
+              <span>✉️ Xem trước nội dung Email thông báo:</span>
             </div>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:8px;">
-              <div>
-                <label for="pushGitUser" style="font-size:11px;color:#64748b;display:block;margin-bottom:3px;font-weight:500;">Tài khoản (Username):</label>
-                <input type="text" id="pushGitUser" class="form-input" style="padding:6px 10px;font-size:12px;" value="Doanthuat" placeholder="Ví dụ: Doanthuat">
-              </div>
-              <div>
-                <label for="pushGitPass" style="font-size:11px;color:#64748b;display:block;margin-bottom:3px;font-weight:500;">Mật khẩu / Token:</label>
-                <input type="password" id="pushGitPass" class="form-input" style="padding:6px 10px;font-size:12px;" placeholder="Nhập mật khẩu hoặc PAT...">
-              </div>
-            </div>
-            <label style="display:flex;align-items:center;gap:8px;font-size:12px;color:#334155;cursor:pointer;padding-top:4px;">
-              <input type="checkbox" id="pushOpenTerminalCheck" style="width:16px;height:16px;" checked>
-              <span>🖥️ <strong>Tự động mở cửa sổ Terminal (màn hình đen)</strong> để xem Git chạy trực tiếp</span>
-            </label>
-          </div>
-
-          <!-- Lệnh Git mẫu để tự chạy nếu muốn -->
-          <div class="git-command-box">
-            <div class="git-cmd-header">
-              <span>💻 Lệnh Git tương ứng:</span>
-              <button type="button" class="btn-copy-cmd" id="btnCopyGitCmd">Sao Chép</button>
-            </div>
-            <code class="git-cmd-text" id="gitCmdPreview">git add . &amp;&amp; git commit -m "feat(seo): Cập nhật bài viết" &amp;&amp; git push origin main</code>
-          </div>
-
-          <!-- Thông báo hỗ trợ -->
-          <div style="background:rgba(37,99,235,0.06);border:1px solid rgba(37,99,235,0.2);border-radius:10px;padding:12px 14px;margin-bottom:16px;display:flex;align-items:flex-start;gap:10px;font-size:13px;line-height:1.5;color:var(--text-primary);">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2" style="flex-shrink:0;margin-top:2px;"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
-            <div>
-              <strong style="color:#2563EB;display:block;margin-bottom:2px;">Tùy Chọn Đẩy Lên GitHub Linh Hoạt:</strong>
-              <span>Khi chọn Cách 3, hệ thống sẽ <strong>tự động mở cửa sổ Terminal</strong> chạy commit &amp; push với tài khoản và mật khẩu của bạn.</span>
+            <div style="font-size:12px;color:#0369a1;margin-top:6px;line-height:1.5;">
+              <strong>Tiêu đề thư:</strong> [SEOPulse Pro] 📢 Thông báo cập nhật bài viết<br>
+              <strong>Nội dung:</strong> Tiêu đề, URL SpintX, Chuyên mục, Ghi chú thay đổi và Đoạn tóm tắt bài viết.
             </div>
           </div>
 
-          <div class="modal-footer" style="display:flex;justify-content:space-between;align-items:center;">
-            <div>
+          <div class="modal-footer" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;padding-top:16px;border-top:1px solid #e2e8f0;margin-top:20px;">
+            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+              <button type="button" class="btn btn-secondary" id="btnDownloadTsFile" title="Tải file resources.constants.ts để chép đè vào mã nguồn SpintX">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line></svg>
+                <span>Tải File TS Mã Nguồn</span>
+              </button>
               <button type="button" class="btn btn-secondary" id="btnDownloadArticleJson" title="Tải file JSON bài viết này về máy">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                 <span>Tải File JSON</span>
               </button>
             </div>
-            <div style="display:flex;gap:10px;">
-              <button type="button" class="btn btn-secondary" id="btnCancelPush">Hủy Bỏ</button>
-              <button type="button" class="btn btn-primary" id="btnConfirmPush">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                <span>Xác Nhận Cập Nhật</span>
+            <div>
+              <button type="button" class="btn btn-primary" id="btnConfirmPush" style="background:linear-gradient(135deg,#0284c7 0%,#0369a1 100%);white-space:nowrap;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                <span>📧 Gửi Thông Báo Email</span>
               </button>
             </div>
           </div>
@@ -840,70 +856,43 @@
       </div>
     </div>
 
-    <!-- Modal: Cài Đặt Đồng Bộ GitHub / Git Repository -->
+    <!-- Modal: Cấu Hình Email Thông Báo -->
     <div class="modal-overlay" id="githubModal">
       <div class="modal-dialog">
         <div class="modal-header">
           <div class="modal-title-wrap">
             <div class="modal-icon">⚙️</div>
             <div>
-              <h3 class="modal-title">Cấu Hình Tài Khoản &amp; Đẩy Code Lên GitHub</h3>
-              <p class="modal-sub">Cài đặt tài khoản/mật khẩu để tự động mở Git commit &amp; push</p>
+              <h3 class="modal-title">Cấu Hình Email Thông Báo</h3>
+              <p class="modal-sub">Cài đặt địa chỉ Email nhận thông báo và thông số SMTP gửi thư</p>
             </div>
           </div>
           <button type="button" class="modal-close" id="btnCloseGithubModal">&times;</button>
         </div>
         <div class="modal-body">
-          <div style="background:#f1f5f9;border-radius:8px;padding:10px 12px;margin-bottom:14px;font-size:12px;color:#334155;line-height:1.5;">
-            <strong>🖥️ Dành Cho Cách 3: Chạy Git Trên Máy Tính</strong>
+          <div class="form-group">
           </div>
 
           <div class="form-group">
-            <label for="gitUsernameInput">Tài khoản Git (Username hoặc Email GitHub) <span class="req">*</span></label>
-            <input type="text" id="gitUsernameInput" class="form-input" placeholder="Ví dụ: Doanthuat" value="Doanthuat">
-          </div>
-
-          <div class="form-group">
-            <label for="gitPasswordInput">Mật khẩu hoặc Personal Access Token (PAT) <span class="req">*</span></label>
-            <input type="password" id="gitPasswordInput" class="form-input" placeholder="Nhập mật khẩu GitHub hoặc token ghp_...">
-            <div class="field-hint">Dùng để xác thực tự động khi lệnh <code>git push</code> chạy, tránh bị hỏi mật khẩu nhiều lần.</div>
-          </div>
-
-          <div class="form-group">
-            <label class="checkbox-label" style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer;">
-              <input type="checkbox" id="openTerminalCheck" style="width:16px;height:16px;" checked>
-              <span><strong>Tự động mở cửa sổ Terminal (màn hình đen)</strong> khi thực hiện Git commit &amp; push</span>
-            </label>
-          </div>
-
-          <div class="form-group">
-            <label for="repoPathInput">Đường Dẫn Thư Mục Dự Án Trên Máy</label>
+            <label for="repoPathInput">Đường Dẫn Thư Mục Repository Trên Máy <span class="req">*</span></label>
             <input type="text" id="repoPathInput" class="form-input" placeholder="D:\Duy_Tam\website_spintx_vn" value="D:\Duy_Tam\website_spintx_vn">
           </div>
 
           <div class="form-group">
-            <label for="ghBranchInput">Tên Nhánh Git (Branch)</label>
+            <label for="ghBranchInput">Nhánh Git (Branch)</label>
             <input type="text" id="ghBranchInput" class="form-input" value="main">
           </div>
 
-          <hr style="border:none;border-top:1px solid #e2e8f0;margin:16px 0;">
-
-          <div style="background:#f8fafc;border-radius:8px;padding:10px 12px;margin-bottom:14px;font-size:12px;color:#334155;line-height:1.5;">
-            <strong>🌐 Dành Cho Cách 2: Đẩy Qua GitHub REST API (Không cần Git)</strong>
-          </div>
-
           <div class="form-group">
-            <div class="label-with-tip">
-              <label for="ghTokenInput">GitHub Personal Access Token (PAT) <small style="color:#64748b;">(Tùy chọn)</small></label>
-              <a href="https://github.com/settings/tokens" target="_blank" rel="noopener" style="font-size:12px;color:#2563EB;font-weight:600;">Lấy Token Tại Đây ↗</a>
-            </div>
-            <input type="password" id="ghTokenInput" class="form-input" placeholder="ghp_... hoặc github_pat_...">
-            <div class="field-hint">Chỉ cần nhập nếu bạn muốn dùng Cách 2 (đẩy trực tiếp qua mạng không cần Git).</div>
+            <label class="checkbox-label" style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer;padding-top:4px;">
+              <input type="checkbox" id="openTerminalCheck" style="width:16px;height:16px;" checked>
+              <span>🖥️ <strong>Tự động mở cửa sổ Terminal (màn hình đen)</strong> để trực tiếp theo dõi tiến trình push</span>
+            </label>
           </div>
 
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" id="btnCancelGithub">Đóng</button>
-            <button type="button" class="btn btn-primary" id="btnSaveGithubConfig">Lưu Cấu Hình</button>
+            <button type="button" class="btn btn-secondary" id="btnCancelGithub">Hủy</button>
+            <button type="button" class="btn btn-primary" id="btnSaveGithubConfig">Lưu Cấu Hình GitHub</button>
           </div>
         </div>
       </div>
