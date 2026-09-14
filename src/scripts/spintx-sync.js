@@ -124,17 +124,18 @@ export class SpintXSyncManager {
   }
 
   async loadArticles() {
+    const baseUrl = import.meta.env.BASE_URL || '/';
     try {
       const res = await fetch('/api/spintx/articles');
       if (res.ok) {
         this.articles = await res.json();
       } else {
-        const fallbackRes = await fetch('/src/data/spintx_articles.json');
+        const fallbackRes = await fetch(`${baseUrl}data/spintx_articles.json`);
         this.articles = await fallbackRes.json();
       }
     } catch (err) {
-      console.warn('Load from API failed, trying fallback file:', err);
-      const fallbackRes = await fetch('/src/data/spintx_articles.json');
+      console.warn('Load from API failed, trying fallback static file:', err);
+      const fallbackRes = await fetch(`${baseUrl}data/spintx_articles.json`);
       this.articles = await fallbackRes.json();
     }
 

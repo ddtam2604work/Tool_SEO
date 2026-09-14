@@ -120,6 +120,7 @@ async function pushFileToGitHub(token, owner, repo, branch, filePath, contentStr
 }
 
 export default defineConfig({
+  base: '/Tool_SEO/',
   server: {
     host: true,
     port: 5173
@@ -135,10 +136,13 @@ export default defineConfig({
               const filePath = path.resolve('src/data/spintx_articles.json');
               const data = fs.readFileSync(filePath, 'utf8');
               res.setHeader('Content-Type', 'application/json; charset=utf-8');
-              res.end(data);
             } catch (err) {
               res.statusCode = 500;
               res.end(JSON.stringify({ error: err.message }));
+            }
+          }
+        });
+
         // GET /api/spintx/export-ts - Download resources.constants.ts for website_spintx_vn codebase
         server.middlewares.use('/api/spintx/export-ts', (req, res) => {
           if (req.method === 'GET') {
