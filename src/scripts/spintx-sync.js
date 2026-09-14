@@ -3,14 +3,14 @@
  * Completely Free of API Keys - Works via Local Git CLI & Local Repository Sync
  */
 
-import defaultArticles from '../data/spintx_articles.json';
+import { SPINTX_ARTICLES_DATA } from '../data/spintx_articles_bundled.js';
 
 const REPO_CONFIG_KEY = 'seopulse_repo_config';
 const EMAIL_CONFIG_KEY = 'seopulse_email_config';
 
 export class SpintXSyncManager {
   constructor() {
-    this.articles = Array.isArray(defaultArticles) ? defaultArticles : [];
+    this.articles = Array.isArray(SPINTX_ARTICLES_DATA) ? SPINTX_ARTICLES_DATA : [];
     this.categories = [];
     this.activeCategory = 'ALL';
     this.searchQuery = '';
@@ -134,7 +134,7 @@ export class SpintXSyncManager {
 
   async loadArticles() {
     if (!this.articles || this.articles.length === 0) {
-      this.articles = Array.isArray(defaultArticles) ? defaultArticles : [];
+      this.articles = Array.isArray(SPINTX_ARTICLES_DATA) ? SPINTX_ARTICLES_DATA : [];
     }
 
     try {
@@ -149,7 +149,7 @@ export class SpintXSyncManager {
         }
       }
     } catch (err) {
-      // Quietly keep defaultArticles
+      // Quietly keep SPINTX_ARTICLES_DATA
     }
 
     // Extract unique categories

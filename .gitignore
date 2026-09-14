@@ -24,14 +24,9 @@ dist/
 dist-ssr/
 
 # Environment variables
-.env
-.env.production
-.env.development
-.env.local
 .env.*.local
 
 # Editor directories and files
-.vscode/*
 !.vscode/extensions.json
 .idea/
 *.suo
@@ -43,3 +38,4 @@ dist-ssr/
 # OS metadata
 .DS_Store
 Thumbs.db
+config.bat
