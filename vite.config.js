@@ -79,6 +79,21 @@ export const RESOURCE_METADATA: Omit<ResourceArticle, "contentHtml">[] = ${JSON.
 `;
 }
 
+function saveArticlesLocal(articles) {
+  const localToolFile = path.resolve('src/data/spintx_articles.json');
+  fs.writeFileSync(localToolFile, JSON.stringify(articles, null, 2), 'utf8');
+
+  const bundledJsFile = path.resolve('src/data/spintx_articles_bundled.js');
+  const jsContent = `/**
+ * SEOPulse Pro - Bundled In-Memory SpintX Knowledge Base (${articles.length} Articles)
+ * Integrated Bundle Data for 0ms Instant Loading on GitHub Pages & Static Hosts
+ */
+
+export const SPINTX_ARTICLES_DATA = ${JSON.stringify(articles, null, 2)};
+`;
+  fs.writeFileSync(bundledJsFile, jsContent, 'utf8');
+}
+
 async function pushFileToGitHub(token, owner, repo, branch, filePath, contentString, message) {
   const fileUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${filePath}?ref=${branch}`;
   let sha = null;
@@ -186,7 +201,7 @@ export default defineConfig({
                   });
                 }
 
-                fs.writeFileSync(filePath, JSON.stringify(articles, null, 2), 'utf8');
+                saveArticlesLocal(articles);
 
                 res.setHeader('Content-Type', 'application/json; charset=utf-8');
                 res.end(JSON.stringify({
@@ -238,7 +253,7 @@ export default defineConfig({
                     updatedAt: new Date().toISOString()
                   });
                 }
-                fs.writeFileSync(localToolFile, JSON.stringify(articles, null, 2), 'utf8');
+                saveArticlesLocal(articles);
 
                 // 2. Also update website_spintx_vn-main FE constants if available
                 const feConstantsDir = path.resolve('website_spintx_vn-main/FE/src/modules/resources/constants');
